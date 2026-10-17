@@ -1,0 +1,5 @@
+dist/
+parts/
+*.bak
+*.tmp
+bin/projd

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# bin/proj - entrypoint fino. Serve para scripts e comandos que não mudam o shell.
+# Para `proj <nome>` / `proj cd` / `proj undo` mudarem o diretório do seu terminal,
+# use a função (source lib/proj/init.sh no .bashrc); um subprocesso não consegue fazer cd.
+self=$(readlink -f "${BASH_SOURCE[0]}")
+root="${self%/bin/*}"
+. "$root/lib/proj/init.sh"
+case "${1:-}" in
+  cd|-) echo "proj: '$1' precisa da função no shell (rode ./install.sh e abra um novo terminal)." >&2; exit 2;;
+esac
+proj "$@"
