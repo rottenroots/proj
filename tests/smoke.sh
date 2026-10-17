@@ -40,11 +40,6 @@ proj_add "$HOME/velho" -c lab -d antigo >/dev/null 2>&1
 eq "add registra" 1 "$(proj_ls -t | grep -c "^velho")"
 eq "add preserva README" oi "$(tail -1 "$HOME/velho/README.md")"
 
-echo "add"
-mkdir -p "$HOME/velho" && echo oi > "$HOME/velho/README.md"
-proj_add "$HOME/velho" -c lab -d antigo >/dev/null 2>&1
-eq "add registra" 1 "$(proj_ls -t | grep -c "^velho")"
-eq "add preserva README" oi "$(tail -1 "$HOME/velho/README.md")"
 
 echo; echo "$pass ok, $fail falha(s)"
 [ "$fail" -eq 0 ]
