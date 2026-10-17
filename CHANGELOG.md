@@ -1,5 +1,8 @@
 # Changelog
 
+## 4.2.0
+- `proj tag add|rm` aceita várias tags separadas por vírgula (`proj tag add a,b,c`).
+
 ## 4.1.1
 - Corrigido: `proj info` mostrava 1969 na data de modificação.
 
