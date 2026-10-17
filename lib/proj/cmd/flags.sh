@@ -24,6 +24,11 @@ proj_fav() {
 
 # @in add|rm <tag> [alvo]  |  ls [alvo]
 
+# @in add|rm <tag[,tag...]> [alvo]  |  ls [alvo]
+# @out ls: stdout tags separadas por espaço
+# @effect add/rm: edita tags no README e no index.tsv (aceita várias, separadas por vírgula; "imune" só via lock/unlock)
+# @ret 1 se tag inválida ou alvo não achado
+# @uses proj_resolve proj_tag_add proj_tag_del proj_readme_set proj_idx_set
 proj_tag() {
   local op="$1" tg="$2" cur new t
   case "$op" in

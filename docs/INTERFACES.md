@@ -81,7 +81,11 @@ Tags: `@in` entradas, `@out` saída, `@g` globais, `@effect` efeitos colaterais,
 - **`proj_fav`**
   - @in 1|0 [alvo]
 - **`proj_tag`**
-  - @in add|rm <tag> [alvo]  |  ls [alvo]
+  - @in add|rm <tag[,tag...]> [alvo]  |  ls [alvo]
+  - @out ls: stdout tags separadas por espaço
+  - @effect add/rm: edita tags no README e no index.tsv (aceita várias, separadas por vírgula; "imune" só via lock/unlock)
+  - @ret 1 se tag inválida ou alvo não achado
+  - @uses proj_resolve proj_tag_add proj_tag_del proj_readme_set proj_idx_set
 
 ### `cmd/help.sh`
 
