@@ -5,7 +5,7 @@ a partir de um cabeçalho `<!-- proj ... -->` no README de cada um. Feito para T
 
 ## Instalação
 
-    git clone <url> && cd proj
+    git clone https://github.com/rottenroots/proj && cd proj
     ./install.sh            # copia para ~/.local/share/proj
     ./install.sh --dev      # symlink, para desenvolver
 
