@@ -52,11 +52,11 @@ proj_info() {
   proj_kv categoria "$c"
   proj_kv tags "${t//,/ }"
   proj_kv criado "${cr}"
-  proj_rule
+  proj_sec atividade
   proj_kv modificado "$(proj_fdate "${mod%.*}")"
   proj_kv acesso "$(proj_fdate "${last:-0}") · ${cnt:-0}x"
   proj_kv tamanho "$(proj_hum "$sz_f") (sem node_modules/.cache) · total $(proj_hum "$sz_t")"
-  proj_rule
+  proj_sec "backup e disco"
   proj_kv backup "$bstat"
   proj_kv vendor "${vend:--}"
   [ -n "$gitb" ] && proj_kv git "$gitb · $gitn alteração(ões) pendente(s)"

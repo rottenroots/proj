@@ -46,7 +46,7 @@ proj_ls() {
   fx=$((3+1+nw+1+7+1+7+1+6+1)); showc=0
   if [ "$W" -ge $((fx+13+12)) ]; then showc=1; fx=$((fx+13)); fi
   rest=$((W-fx)); [ "$rest" -lt 8 ] && rest=0
-  printf '%s   %-*s %-7s ' "$PC_H" "$nw" NOME VERSAO
+  printf '%s    %-*s %-7s ' "$PC_H" "$nw" NOME VERSAO
   [ $showc = 1 ] && printf '%-12s ' CATEGORIA
   printf '%7s %-6s ' TAM ULTIMO
   [ "$rest" -gt 0 ] && printf 'DESCRICAO'
@@ -63,7 +63,9 @@ proj_ls() {
     col="$PC_RST"; [ "${size:-0}" -gt $(( SIZE_WARN_MB * 1048576 )) ] && col="$PC_R"
     if [ "${size:-0}" -gt 0 ]; then printf '%s%7s%s ' "$col" "$(proj_hum "$size")" "$PC_RST"; else printf '%7s ' "-"; fi
     printf '%s%-6s%s ' "$PC_D" "$(proj_ago "$last")" "$PC_RST"
-    [ "$rest" -gt 0 ] && [ "$desc" != "-" ] && printf '%s' "${desc:0:rest}"
+    if [ "$rest" -gt 0 ] && [ "$desc" != "-" ]; then
+      if [ "${#desc}" -gt "$rest" ]; then printf '%s…' "${desc:0:rest-1}"; else printf '%s' "$desc"; fi
+    fi
     printf '\n'
     [ -n "$showp" ] && printf '%s    %s%s\n' "$PC_D" "$d" "$PC_RST"
   done <<<"$rows"

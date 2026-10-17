@@ -86,3 +86,13 @@ proj_rule() {
   printf -v l '%*s' "$w" ''
   printf '%s%s%s\n' "$PC_D" "${l// /$c}" "$PC_RST"
 }
+
+# @in titulo [largura]  @out régua com o título embutido: "── titulo ─────"
+proj_sec() {
+  local t="$1" w="${2:-${COLUMNS:-0}}" l n
+  { [[ $w =~ ^[0-9]+$ ]] && (( w > 0 )); } || w=$(tput cols 2>/dev/null || echo 60)
+  (( w > 72 )) && w=72
+  n=$(( w - ${#t} - 4 )); (( n < 3 )) && n=3
+  printf -v l '%*s' "$n" ''
+  printf '%s── %s%s%s%s %s%s\n' "$PC_D" "$PC_RST" "$PC_H" "$t" "$PC_RST$PC_D" "${l// /─}" "$PC_RST"
+}
