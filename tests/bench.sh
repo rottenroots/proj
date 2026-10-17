@@ -11,6 +11,5 @@ t() {  # rótulo arquivo
 }
 echo "carga média de $N shells:"
 t "bash vazio (baseline)" /dev/null
-[ -f "$ROOT/docs/proj.original.sh" ] && bash -n "$ROOT/docs/proj.original.sh" 2>/dev/null && t "original (1266 linhas)" "$ROOT/docs/proj.original.sh"
 t "modular + lazy (init.sh)" "$ROOT/lib/proj/init.sh"
 [ -f "$ROOT/dist/proj.sh" ] && t "bundle (dist/proj.sh)" "$ROOT/dist/proj.sh"
