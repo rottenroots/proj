@@ -144,7 +144,7 @@ proj_backup() {
           -C "${T_D%/*}" "${T_D##*/}" || { echo "Falhou o backup de segurança."; return 1; }
         rm -rf "$T_D" && tar -xzf "$f" -C "${T_D%/*}" &&
           echo "Restaurado em $T_D (versão anterior guardada em $PROJ_BKP/pre-restore)" &&
-          cd "$T_D"
+          cd "$T_D" || return
       else
         dest="$HOME/proj-restaurado/$T_K-$stamp"
         mkdir -p "$dest" && tar -xzf "$f" -C "$dest" &&

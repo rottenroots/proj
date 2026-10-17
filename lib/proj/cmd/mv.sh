@@ -27,6 +27,6 @@ proj_mv() {
   proj_readme_set "$dest" nome "$nn"; proj_readme_set "$dest" versao "$nv"; proj_readme_set "$dest" categoria "$nc"
   [ "$oldk" != "$newk" ] && proj_key_rename "$oldk" "$newk"
   proj_scan full >/dev/null
-  [ $wasin = 1 ] && cd "$dest"
+  [ $wasin = 1 ] && { cd "$dest" || return; }
   echo "Movido: $od -> $dest"
 }

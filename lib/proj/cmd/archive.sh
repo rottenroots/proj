@@ -19,7 +19,7 @@ proj_archive() {
   proj_resolve "$1" || return 1
   dest="$PROJ_BASE/archive/$T_K"
   [ -e "$dest" ] && { echo "Já existe: $dest"; return 1; }
-  case "$PWD" in "$T_D"|"$T_D"/*) cd "${T_D%/*}" || cd "$HOME";; esac
+  case "$PWD" in "$T_D"|"$T_D"/*) cd "${T_D%/*}" || cd "$HOME" || return;; esac
   mkdir -p "$PROJ_BASE/archive" && mv "$T_D" "$dest" || return 1
   proj_scan full >/dev/null
   echo "Arquivado em: $dest  (volta com: proj archive restore $T_K)"

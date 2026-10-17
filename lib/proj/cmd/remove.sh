@@ -30,7 +30,7 @@ proj_remove() {
     echo "${PC_R}EXCLUSÃO REAL${PC_RST}: apaga $d e os backups periódicos. Sem cópia, sem volta."
     read -rp "Digite o nome do projeto ($T_N) pra confirmar: " ans
     [ "$ans" = "$T_N" ] || { echo "Cancelado."; return 1; }
-    case "$PWD" in "$d"|"$d"/*) cd "${d%/*}" || cd "$HOME";; esac
+    case "$PWD" in "$d"|"$d"/*) cd "${d%/*}" || cd "$HOME" || return;; esac
     rm -rf "$d" || return 1
     rm -rf "${PROJ_BKP:?}/$T_K"
     echo "Excluído definitivamente."
@@ -46,7 +46,7 @@ proj_remove() {
     tar -czf "$bk" -C "${d%/*}" "${d##*/}" 2>/dev/null ||
       { echo "Falhou o backup de segurança. Nada foi apagado."; rm -f "$bk"; return 1; }
     printf '%s\n%s\n' "$d" "$tags" > "${bk%.tar.gz}.meta"
-    case "$PWD" in "$d"|"$d"/*) cd "${d%/*}" || cd "$HOME";; esac
+    case "$PWD" in "$d"|"$d"/*) cd "${d%/*}" || cd "$HOME" || return;; esac
     rm -rf "$d" || return 1
     echo "Apagado. Cópia de segurança: $bk  (desfaça com: proj undo)"
   fi
@@ -78,5 +78,5 @@ proj_undo() {
   mkdir -p "${dir%/*}" && tar -xzf "$f" -C "${dir%/*}" || { echo "Falhou ao restaurar."; return 1; }
   proj_scan full >/dev/null
   echo "Restaurado em: $dir"
-  cd "$dir" 2>/dev/null
+  cd "$dir" 2>/dev/null || return 0
 }
