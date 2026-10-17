@@ -45,5 +45,12 @@ echo "info"
 proj_add "$HOME/velho" >/dev/null 2>&1
 eq "info data modificada" 0 "$(proj_info velho 2>/dev/null | grep -c 1969)"
 
+echo "tag"
+proj_new tg-x -t a >/dev/null 2>&1
+proj_tag add b,c >/dev/null 2>&1
+eq "tag add multiplas" "a b c" "$(proj_tag ls)"
+proj_tag rm b,c >/dev/null 2>&1
+eq "tag rm multiplas" "a" "$(proj_tag ls)"
+
 echo; echo "$pass ok, $fail falha(s)"
 [ "$fail" -eq 0 ]

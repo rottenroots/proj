@@ -23,20 +23,24 @@ proj_fav() {
 }
 
 # @in add|rm <tag> [alvo]  |  ls [alvo]
+
 proj_tag() {
-  local op="$1" tg="$2" cur new
+  local op="$1" tg="$2" cur new t
   case "$op" in
     ls) proj_resolve "${2:-.}" || return 1
         IFS=$'\t' read -r _ _ _ _ _ cur _ <<<"$T_L"
         echo "${cur//,/ }"; return;;
     add|rm) ;;
-    *) echo "uso: proj tag add|rm <tag> [alvo]  |  proj tag ls [alvo]"; return 1;;
+    *) echo "uso: proj tag add|rm <tag[,tag...]> [alvo]  |  proj tag ls [alvo]"; return 1;;
   esac
-  [[ "$tg" =~ ^[A-Za-z0-9_.-]+$ ]] || { echo "Tag inválida." >&2; return 1; }
-  [ "$tg" = "$IMUNE_TAG" ] && { echo "Use proj lock/unlock para a tag '$IMUNE_TAG'." >&2; return 1; }
+  [[ "$tg" =~ ^[A-Za-z0-9_.,-]+$ ]] || { echo "Tag inválida (use letras, números, . _ - e vírgula)." >&2; return 1; }
+  case ",$tg," in *",${IMUNE_TAG},"*) echo "Use proj lock/unlock para a tag '$IMUNE_TAG'." >&2; return 1;; esac
   proj_resolve "${3:-.}" || return 1
   IFS=$'\t' read -r _ _ _ _ _ cur _ <<<"$T_L"
   [ "$cur" = - ] && cur=""
-  if [ "$op" = add ]; then new=$(proj_tag_add "$cur" "$tg"); else new=$(proj_tag_del "$cur" "$tg"); fi
+  for t in ${tg//,/ }; do
+    if [ "$op" = add ]; then cur=$(proj_tag_add "$cur" "$t"); else cur=$(proj_tag_del "$cur" "$t"); fi
+  done
+  new=$cur
   proj_readme_set "$T_D" tags "$new" && proj_idx_set "$T_D" 6 "${new:--}" && echo "tags: ${new:-(nenhuma)}"
 }
