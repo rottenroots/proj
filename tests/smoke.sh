@@ -41,5 +41,9 @@ eq "add registra" 1 "$(proj_ls -t | grep -c "^velho")"
 eq "add preserva README" oi "$(tail -1 "$HOME/velho/README.md")"
 
 
+echo "info"
+proj_add "$HOME/velho" >/dev/null 2>&1
+eq "info data modificada" 0 "$(proj_info velho 2>/dev/null | grep -c 1969)"
+
 echo; echo "$pass ok, $fail falha(s)"
 [ "$fail" -eq 0 ]

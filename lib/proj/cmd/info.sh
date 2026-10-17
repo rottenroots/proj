@@ -16,7 +16,7 @@ proj_info() {
   printf -v now '%(%s)T' -1
   proj_st_set "$k" "4:${sz_f:-0}" "5:$now"
   mod=$(find "$d" \( -name .git -o -name node_modules -o -name .cache \) -prune -o -type f -printf '%T@\n' 2>/dev/null |
-        awk '$1>m{m=$1} END{print m+0}')
+        awk '$1>m{m=$1} END{printf "%d", m}')
   bk=
   while IFS=$'\t' read -r bkk bs keep; do
     [ "$bkk" = "$k" ] && { bk=1; iv=$bs; break; }
