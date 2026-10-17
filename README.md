@@ -50,9 +50,3 @@ MIT
 `src/main.cpp` (`make cpp`) implementa `rows`, `find`, `here` e `st` com saída idêntica ao shell
 (`make parity`). Em testes com 3000 projetos não houve ganho sobre o awk, então fica desligado
 por padrão; o próximo candidato é o `scan`.
-
-## Núcleo nativo (experimental)
-
-`src/main.cpp` (`make cpp`) implementa `rows`, `find`, `here` e `st` com saída idêntica ao shell
-(`make parity`). Em testes com 3000 projetos não houve ganho sobre o awk, então fica desligado
-por padrão; o próximo candidato é o `scan`.
