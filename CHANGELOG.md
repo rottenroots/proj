@@ -1,5 +1,8 @@
 # Changelog
 
+## 4.1.1
+- Corrigido: `proj info` mostrava 1969 na data de modificação.
+
 ## 4.1.0
 - Código modularizado em `core/`, `store/`, `nav/`, `backup/`, `cmd/` com carga lazy.
 - Novo: `proj add` registra pasta existente sem mover nada.
