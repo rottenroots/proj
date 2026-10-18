@@ -81,11 +81,11 @@ proj_clean_auto() {
 proj_config() {
   local k
   if [ -z "$1" ]; then
-    for k in PROJ_COLOR CLEAN_ON CLEAN_DIAS CLEAN_MIN IMUNE_TAG BKP_IV BKP_KEEP SIZE_WARN_MB FREE_WARN_MB NOTIFY HOOKS; do
+    for k in PROJ_COLOR CLEAN_ON CLEAN_DIAS CLEAN_MIN IMUNE_TAG BKP_IV BKP_KEEP SIZE_WARN_MB FREE_WARN_MB NOTIFY HOOKS PROJ_UI_KEY PROJ_PICK BKP_ALL; do
       printf '%s%-13s%s %s\n' "$PC_D" "$k" "$PC_RST" "${!k}"
     done; return
   fi
-  case "$1" in PROJ_COLOR|CLEAN_ON|CLEAN_DIAS|CLEAN_MIN|IMUNE_TAG|BKP_IV|BKP_KEEP|SIZE_WARN_MB|FREE_WARN_MB|NOTIFY|HOOKS) ;;
+  case "$1" in PROJ_COLOR|CLEAN_ON|CLEAN_DIAS|CLEAN_MIN|IMUNE_TAG|BKP_IV|BKP_KEEP|SIZE_WARN_MB|FREE_WARN_MB|NOTIFY|HOOKS|PROJ_UI_KEY|PROJ_PICK|BKP_ALL) ;;
     *) echo "Chave inválida: $1 (veja: proj config)" >&2; return 1;; esac
   [ -z "$2" ] && { echo "$1=${!1}"; return; }
   [[ "$2" =~ ^[A-Za-z0-9_.-]+$ ]] || { echo "Valor inválido." >&2; return 1; }

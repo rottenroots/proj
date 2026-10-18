@@ -6,6 +6,9 @@
 # @in [filtro] [-j|-t] [-s|-r|-a] [-p] [-f]  @out stdout tabela | json | tsv  @g PC_* SIZE_WARN_MB COLUMNS
 # @uses proj_rows proj_hum proj_ago proj_is_imune proj_size_all proj_rule
 proj_ls() {
+  if [ "${PROJ_PICK:-0}" = 1 ] && [ -t 0 ] && [ -t 1 ]; then
+    case "${1:-}" in ""|[!-]*) proj_pick "$1"; return;; esac
+  fi
   local fmt="" sk=fav filt="" force="" showp="" W nw fx showc rest rows
   local n v d desc c t cr last cnt size fav mark col
   local total=0 np=0 miss=0

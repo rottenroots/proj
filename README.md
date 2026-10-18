@@ -21,6 +21,19 @@ Abra um novo terminal. O instalador adiciona uma linha ao `~/.bashrc` (e `./inst
     proj lock .                                     # imune a rm/clean
     proj help                                       # tudo
 
+## Interface interativa
+
+    proj ui          # configuração ao vivo: ↑↓ move, ←→ altera, ⏎ edita, u desfaz, q sai
+    proj pick        # seletor de projetos: ⏎ entra, i info, / filtra
+    proj b all on    # backup automático em todos os projetos
+
+No `proj pick`: `b` liga/desliga backup, `f` fixa (★) e `x` alterna a imunidade (🔒) do projeto
+selecionado. Não há `rm` no seletor, de propósito.
+
+Em `proj ui` dá para ligar "Seletor no proj l" (o `proj l` passa a abrir o seletor; com flags
+como `-a` ou `-j` continua a tabela) e escolher um atalho de teclado (`Ctrl+G`, `Ctrl+O`, `Ctrl+P`)
+para abrir a própria tela.
+
 ## Estrutura
 
     bin/proj            entrypoint fino (scripts)
@@ -30,7 +43,7 @@ Abra um novo terminal. O instalador adiciona uma linha ao `~/.bashrc` (e `./inst
       store/            readme, state, scan, size (leitura/escrita dos .tsv)
       nav/              resolver alvo e entrar no projeto
       backup/           backups periódicos e limpeza
-      cmd/              um arquivo por comando
+      cmd/              um arquivo por comando (inclui ui.sh e pick.sh, as telas interativas)
       main.sh           dispatcher  |  completion.sh  autocompletar
     tests/              smoke.sh, bench.sh
     docs/               documentação
@@ -41,10 +54,6 @@ Abra um novo terminal. O instalador adiciona uma linha ao `~/.bashrc` (e `./inst
     make build     # gera dist/proj.sh (arquivo único)
     make bench     # tempo de carga: original x modular x bundle
 
-## Licença
-
-MIT
-
 ## Núcleo nativo (experimental)
 
 `src/main.cpp` (`make cpp`) implementa `rows`, `find`, `here` e `st` com saída idêntica ao shell
@@ -52,3 +61,7 @@ MIT
 por padrão; o próximo candidato é o `scan`.
 
 > **Termux:** não confunda com o pacote `proj` do `pkg` (biblioteca de projeções cartográficas). Este projeto é instalado por `./install.sh`.
+
+## Licença
+
+MIT

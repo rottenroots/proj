@@ -33,6 +33,8 @@ proj() {
     config)          shift; proj_config "$@" ;;
     organize)        shift; proj_organize "$@" ;;
     add|adopt)       shift; proj_add "$@" ;;
+    ui)              shift; proj_ui "$@" ;;
+    pick|sel)        shift; proj_pick "$@" ;;
     cd)              shift; proj_cd "$@" ;;
     -)               proj_cd - ;;
     help|-h|--help|"") proj_help ;;

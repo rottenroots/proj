@@ -96,3 +96,12 @@ proj_sec() {
   printf -v l '%*s' "$n" ''
   printf '%s── %s%s%s%s %s%s\n' "$PC_D" "$PC_RST" "$PC_H" "$t" "$PC_RST$PC_D" "${l// /─}" "$PC_RST"
 }
+
+# @in texto largura  @out REPLY texto preenchido por CARACTERES (printf %-Ns conta bytes)
+proj_pad() {
+  local s=$1 w=$2 c pad
+  local LC_ALL=C
+  c=${s//[$'\x80'-$'\xbf']/}
+  (( w - ${#c} > 0 )) && printf -v pad '%*s' $(( w - ${#c} )) '' || pad=""
+  REPLY=$s$pad
+}

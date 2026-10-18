@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.3.0
+- Novo: `proj ui`, tela de configuração em tempo real (só teclado), com prévia ao vivo e atalho configurável (`PROJ_UI_KEY`).
+- Novo: `proj pick`, seletor de projetos estilo mc (⏎ entra, `b` backup, `f` favorito, `x` imunidade, `/` filtra).
+- Novo: toggle "Seletor no proj l" (`PROJ_PICK`): com ele ligado, `proj l` abre o seletor em terminal.
+- Novo: `proj b all on|off`, backup automático em todos os projetos, sem alvo (`BKP_ALL`).
+- Alinhamento do `ls` corrigido, reticências na descrição cortada e seções tituladas no `info`.
+
 ## 4.2.0
 - `proj tag add|rm` aceita várias tags separadas por vírgula (`proj tag add a,b,c`).
 

@@ -16,12 +16,12 @@ if [ -d "$HOME/storage/shared" ]; then
 else
   PROJ_BKP="${PROJ_BKP:-$HOME/.proj-backups}"
 fi
-PROJ_CMDS="add ls l info i new n backup b vendor v scan s path p edit e open o recent r archive a grep g rm del remove mv rename lock unlock fav unfav note todo tag undo clean doctor stale export config organize cd help"
+PROJ_CMDS="pick ui add ls l info i new n backup b vendor v scan s path p edit e open o recent r archive a grep g rm del remove mv rename lock unlock fav unfav note todo tag undo clean doctor stale export config organize cd help"
 
 # @out defaults + sobrescreve com $PROJ_CFG
 proj_cfg_load() {
   PROJ_COLOR=auto; CLEAN_ON=1; CLEAN_DIAS=30; CLEAN_MIN=1; IMUNE_TAG=imune
-  BKP_IV=1d; BKP_KEEP=5; SIZE_WARN_MB=500; FREE_WARN_MB=300; NOTIFY=1; HOOKS=1
+  BKP_IV=1d; BKP_KEEP=5; SIZE_WARN_MB=500; FREE_WARN_MB=300; NOTIFY=1; HOOKS=1; PROJ_UI_KEY=off; PROJ_PICK=0; BKP_ALL=0
   [ -f "$PROJ_CFG" ] && . "$PROJ_CFG"
   return 0
 }

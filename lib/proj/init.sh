@@ -56,7 +56,16 @@ if [[ $- == *i* ]] && command -v complete >/dev/null 2>&1; then
 fi
 
 _proj_lazy cmd/add.sh      proj_add
+_proj_lazy cmd/ui.sh       proj_ui
+_proj_lazy cmd/pick.sh     proj_pick
 # atalhos dos projetos (nome() { proj_cd nome; })
 [ -f "$PROJ_FN" ] && . "$PROJ_FN"
 _proj_lazy backup/backup.sh proj_backup_auto proj_free_check proj_bg proj_backup
 _proj_lazy backup/clean.sh  proj_clean_auto proj_config proj_clean
+
+# atalho do `proj ui`
+if [[ $- == *i* ]] && [ -r "$PROJ_CFG" ]; then
+  while IFS='=' read -r _a _b; do [ "$_a" = PROJ_UI_KEY ] && _k=$_b; done < "$PROJ_CFG"
+  if [ -n "${_k:-}" ] && [ "$_k" != off ]; then bind -x "\"\\${_k}\": proj ui" 2>/dev/null; fi
+  unset _a _b _k
+fi

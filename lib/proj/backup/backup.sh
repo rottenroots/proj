@@ -58,7 +58,10 @@ proj_backup_auto() {
   while IFS=$'\t' read -r kk s keep; do
     [ "$kk" = "$k" ] && { found=1; break; }
   done < "$BKP_CFG"
-  [ -n "$found" ] || return 0
+  if [ -z "$found" ]; then
+    [ "${BKP_ALL:-0}" = 1 ] || return 0
+    s=$(proj_secs "${BKP_IV:-1d}") || return 0; keep=${BKP_KEEP:-5}
+  fi
   if _proj_desc "$PROJ_BKP/$k"/*.tar.gz; then
     lf="${BK_F[0]}"
     last=$(stat -c %Y "$lf")
@@ -90,6 +93,11 @@ proj_backup() {
   local a="${1:-now}" s iv keep k secs cnt last arg tgt force i f dest stamp r sz m
   [ $# -gt 0 ] && shift
   case "$a" in
+    all)
+      case "$1" in on|1) k=1;; off|0) k=0;; *) echo "BKP_ALL=${BKP_ALL:-0}  (uso: proj b all on|off)"; return;; esac
+      proj_config BKP_ALL "$k" >/dev/null; proj_cfg_load
+      if [ "$k" = 1 ]; then echo "Backup automático ${PC_G}ligado${PC_RST} em todos (a cada $BKP_IV, mantém $BKP_KEEP)."
+      else echo "Backup em todos ${PC_R}desligado${PC_RST} (os individuais continuam)."; fi;;
     on)
       case "$1" in [0-9]*[mhdw]) set -- . "$@";; esac   # "proj b on 12h" vale pro projeto atual
       proj_resolve "$1" || return 1

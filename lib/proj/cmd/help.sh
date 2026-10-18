@@ -27,9 +27,12 @@ proj undo [ls|N]               restaura projeto apagado
 proj clean [on|off|dias N|min N|now|-n]   limpeza de removidos/pre-restore/backups velhos
 proj b  [alvo]                 backup agora   | b on [alvo] [30m|12h|1d|1w] [manter]
 proj b  off|now [alvo] | ls | restore [alvo] [-f]
+proj b  all on|off             backup automático em TODOS os projetos (sem alvo)
 proj v  add <projeto[@versao]|url|caminho> [nome] | ls | use <nome> | rm <nome>
 proj s  [full]                 reescaneia     proj organize [-n]
 proj doctor [-f]               diagnóstico    proj export [-j] [arquivo]
+proj pick [filtro]              seletor interativo (⏎ entra, b backup, f fav, x imune)
+proj ui                        tela de configuração ao vivo (↑↓ ←→ ⏎)
 proj config [chave [valor]]    configurações (cores, limites, intervalo padrão...)
 
 Aliases: l i n p e o r a g b v s. O rm não tem apelido de uma letra (de propósito).

@@ -150,6 +150,19 @@ Tags: `@in` entradas, `@out` saída, `@g` globais, `@effect` efeitos colaterais,
   - @effect acha READMEs proj em $HOME (prof. 4) e $PROJ_BASE e move p/ projects/<cat>/<nome-versao>
   - @uses proj_readmes proj_valid_cat proj_readme_set proj_scan
 
+### `cmd/pick.sh`
+
+- **`proj_pick`**
+  - @in [filtro]  @effect tela cheia; ⏎ entra no projeto (cd no shell atual)
+  - @effect b/f/x gravam backup, favorito e imunidade na hora  @ret 1 sem terminal
+  - @uses proj_rows proj_resolve proj_enter proj_info proj_backup proj_fav proj_lock proj_pad
+- **`_pick_leave`**
+  - @effect sai da tela alternativa
+- **`_pick_load`**
+  - @effect recarrega R (linhas de proj_rows, favoritos primeiro) e bk (chaves com backup próprio)
+- **`_pick_draw`**
+  - @effect redesenha a tela (sem limpar antes: sem piscar)
+
 ### `cmd/remove.sh`
 
 - **`proj_remove`**
@@ -161,6 +174,26 @@ Tags: `@in` entradas, `@out` saída, `@g` globais, `@effect` efeitos colaterais,
 - **`proj_undo`**
   - @in [ls|N]  N = posição na lista (1 = mais recente)
   - CORRIGIDO: o original usava "N) nome" como se fosse caminho; agora é array de caminhos.
+
+### `cmd/ui.sh`
+
+- **`proj_ui`**
+  - @in (nada)  @effect tela alternativa; cada alteração grava em $PROJ_CFG e redesenha a prévia
+  - @ret 1 se não houver terminal
+- **`_ui_leave`**
+  - @effect sai da tela alternativa e devolve o cursor
+- **`_ui_set`**
+  - @in chave valor  @effect grava via proj_config, recarrega config e cores, religa o atalho
+- **`_ui_bind`**
+  - @in tecla_antiga  @effect troca o bind do readline (só em shell interativo)
+- **`_ui_change`**
+  - @in -1|0|1  @effect altera a opção selecionada (bool alterna, enum cicla, num soma, 0 abre prompt)
+- **`_ui_ask`**
+  - @effect lê um valor digitado para a opção selecionada
+- **`_ui_preview`**
+  - @effect amostra com as cores e limites atuais
+- **`_ui_draw`**
+  - @effect redesenha a tela inteira (sem limpar antes: sem piscar)
 
 ### `cmd/vendor.sh`
 
@@ -231,6 +264,10 @@ Tags: `@in` entradas, `@out` saída, `@g` globais, `@effect` efeitos colaterais,
   - Substitui `ls -1t | head/tail` (1-3 forks por chamada). @ret 1 se nada casou.
 - **`proj_rule`**
   - @in [largura] [char]  @out linha horizontal (máx. 72 colunas)
+- **`proj_sec`**
+  - @in titulo [largura]  @out régua com o título embutido: "── titulo ─────"
+- **`proj_pad`**
+  - @in texto largura  @out REPLY texto preenchido por CARACTERES (printf %-Ns conta bytes)
 
 ## (raiz)
 
@@ -324,4 +361,4 @@ Tags: `@in` entradas, `@out` saída, `@g` globais, `@effect` efeitos colaterais,
   - @out stdout: n v d desc cat tags criado | acesso acessos bytes fav
 
 ---
-89 funções, 5 sem contrato.
+103 funções, 5 sem contrato.

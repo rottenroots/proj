@@ -52,5 +52,12 @@ eq "tag add multiplas" "a b c" "$(proj_tag ls)"
 proj_tag rm b,c >/dev/null 2>&1
 eq "tag rm multiplas" "a" "$(proj_tag ls)"
 
+no "ui sem terminal recusa" proj_ui
+no "pick sem terminal recusa" proj_pick
+echo "backup global"
+proj_new bg-x >/dev/null 2>&1
+proj_resolve bg-x@1.0 q
+BKP_ALL=1 proj_backup_auto "$T_K" "$T_D"
+eq "backup global cria cópia" 1 "$(ls "$PROJ_BKP/bg-x-1.0"/*.tar.gz 2>/dev/null | wc -l)"
 echo; echo "$pass ok, $fail falha(s)"
 [ "$fail" -eq 0 ]
