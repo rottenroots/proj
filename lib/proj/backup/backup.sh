@@ -82,7 +82,7 @@ proj_free_check() {
 }
 
 # @in chave dir  @effect tarefas de fundo disparadas pelo proj_enter
-proj_bg() { proj_backup_auto "$1" "$2"; proj_size_refresh "$1" "$2"; proj_clean_auto; proj_free_check; }
+proj_bg() { proj_backup_auto "$1" "$2"; proj_size_refresh "$1" "$2"; proj_clean_auto; proj_free_check; proj_cfg_snapshot; }
 
 # proj backup [alvo] | on [alvo] [intervalo] [manter] | off [alvo] | now [alvo] | ls | restore [alvo] [-f]
 # @in on|off|now|ls|restore|<alvo> [args]
@@ -93,6 +93,19 @@ proj_backup() {
   local a="${1:-now}" s iv keep k secs cnt last arg tgt force i f dest stamp r sz m
   [ $# -gt 0 ] && shift
   case "$a" in
+    cfg)
+      case "$1" in
+        now) rm -f "$PROJ_DIR/.cfgsnap"; proj_cfg_snapshot; echo "Cópia da configuração feita.";;
+        restore)
+          _proj_desc "$PROJ_BKP/_config"/*.tar.gz || { echo "Sem cópias da configuração."; return 1; }
+          printf -v stamp '%(%Y%m%d-%H%M%S)T' -1
+          dest="$HOME/proj-restaurado/config-$stamp"
+          mkdir -p "$dest" && tar -xzf "${BK_F[0]}" -C "$dest" &&
+            echo "Restaurada em: $dest  (copie o que precisar para $PROJ_DIR)";;
+        *) if _proj_desc "$PROJ_BKP/_config"/*.tar.gz; then
+             for f in "${BK_F[@]}"; do echo "${f##*/}"; done
+           else echo "Sem cópias da configuração."; fi;;
+      esac;;
     all)
       case "$1" in on|1) k=1;; off|0) k=0;; *) echo "BKP_ALL=${BKP_ALL:-0}  (uso: proj b all on|off)"; return;; esac
       proj_config BKP_ALL "$k" >/dev/null; proj_cfg_load
@@ -162,4 +175,24 @@ proj_backup() {
       if proj_resolve "$a" q; then proj_backup now "$a"
       else echo "proj b [alvo] | on [alvo] [intervalo] [manter] | off | ls | restore [alvo] [-f]"; fi;;
   esac
+}
+
+# @effect no máx. 1x/dia: tar.gz verificado de $PROJ_DIR em $PROJ_BKP/_config, mantém as 7 últimas
+# @g PROJ_DIR PROJ_BKP  @ret 0
+proj_cfg_snapshot() {
+  local st="$PROJ_DIR/.cfgsnap" out="$PROJ_BKP/_config" stamp f i
+  [ -f "$st" ] && [ -z "$(find "$st" -mmin +1440 2>/dev/null)" ] && return 0
+  touch "$st"
+  mkdir -p "$out"
+  printf -v stamp '%(%Y%m%d-%H%M%S)T' -1
+  f="$out/$stamp.tar.gz"
+  if tar -czf "$f" --exclude='.lk-*' --exclude='.stamp*' -C "${PROJ_DIR%/*}" "${PROJ_DIR##*/}" 2>/dev/null &&
+     tar -tzf "$f" >/dev/null 2>&1; then
+    if _proj_desc "$out"/*.tar.gz; then
+      for (( i=7; i<${#BK_F[@]}; i++ )); do rm -f "${BK_F[i]}"; done
+    fi
+  else
+    rm -f "$f"
+  fi
+  return 0
 }

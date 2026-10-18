@@ -13,7 +13,7 @@ _proj_complete() {
     return
   fi
   case "$sub" in
-    backup|b) if [ "$COMP_CWORD" -eq 2 ]; then COMPREPLY=( $(compgen -W "on off now all ls restore $names" -- "$cur") )
+    backup|b) if [ "$COMP_CWORD" -eq 2 ]; then COMPREPLY=( $(compgen -W "on off now all cfg ls restore $names" -- "$cur") )
               else COMPREPLY=( $(compgen -W "$names" -- "$cur") ); fi;;
     vendor|v) for p in "$PROJ_BASE/vendor"/*; do [ -e "$p" ] && vend+="${p##*/} "; done
               COMPREPLY=( $(compgen -W "add ls use rm $vend $names" -- "$cur") );;

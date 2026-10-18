@@ -30,6 +30,9 @@ Tags: `@in` entradas, `@out` saída, `@g` globais, `@effect` efeitos colaterais,
   - @effect on/off: edita backup.tsv | now: tar.gz verificado | restore: extrai (-f substitui o original, com cópia em pre-restore)
   - @ret 0 ok, 1 erro
   - @uses proj_resolve proj_lockrun proj_backup_do proj_secs proj_fmt_secs _proj_desc
+- **`proj_cfg_snapshot`**
+  - @effect no máx. 1x/dia: tar.gz verificado de $PROJ_DIR em $PROJ_BKP/_config, mantém as 7 últimas
+  - @g PROJ_DIR PROJ_BKP  @ret 0
 
 ### `backup/clean.sh`
 
@@ -361,4 +364,4 @@ Tags: `@in` entradas, `@out` saída, `@g` globais, `@effect` efeitos colaterais,
   - @out stdout: n v d desc cat tags criado | acesso acessos bytes fav
 
 ---
-103 funções, 5 sem contrato.
+104 funções, 5 sem contrato.

@@ -33,7 +33,7 @@ proj_doctor() {
   if [ -d "$PROJ_BKP" ]; then
     for d in "$PROJ_BKP"/*/; do
       k="${d%/}"; k="${k##*/}"
-      case "$k" in removidos|pre-restore|'*') continue;; esac
+      case "$k" in removidos|pre-restore|_config|'*') continue;; esac
       [ -n "${have[$k]:-}" ] || echo "  ${PC_Y}!${PC_RST} backups sem projeto registrado: $k"
     done
   fi

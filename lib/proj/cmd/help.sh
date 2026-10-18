@@ -28,6 +28,7 @@ proj clean [on|off|dias N|min N|now|-n]   limpeza de removidos/pre-restore/backu
 proj b  [alvo]                 backup agora   | b on [alvo] [30m|12h|1d|1w] [manter]
 proj b  off|now [alvo] | ls | restore [alvo] [-f]
 proj b  all on|off             backup automático em TODOS os projetos (sem alvo)
+proj b  cfg [now|ls|restore]       cópias da configuração (~/.config/proj), 1x/dia, mantém 7
 proj v  add <projeto[@versao]|url|caminho> [nome] | ls | use <nome> | rm <nome>
 proj s  [full]                 reescaneia     proj organize [-n]
 proj doctor [-f]               diagnóstico    proj export [-j] [arquivo]

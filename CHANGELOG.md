@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.4.0
+- Novo: cópia automática da configuração (`~/.config/proj`) 1x/dia em `$PROJ_BKP/_config`, mantém 7. `proj b cfg [now|ls|restore]`.
+- Testes de backup (rotação, verificação), clean e snapshot da configuração.
+
 ## 4.3.0
 - Novo: `proj ui`, tela de configuração em tempo real (só teclado), com prévia ao vivo e atalho configurável (`PROJ_UI_KEY`).
 - Novo: `proj pick`, seletor de projetos estilo mc (⏎ entra, `b` backup, `f` favorito, `x` imunidade, `/` filtra).

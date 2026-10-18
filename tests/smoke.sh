@@ -59,5 +59,23 @@ proj_new bg-x >/dev/null 2>&1
 proj_resolve bg-x@1.0 q
 BKP_ALL=1 proj_backup_auto "$T_K" "$T_D"
 eq "backup global cria cópia" 1 "$(ls "$PROJ_BKP/bg-x-1.0"/*.tar.gz 2>/dev/null | wc -l)"
+echo "backup e clean"
+proj_new bk-t >/dev/null 2>&1
+proj_resolve bk-t@1.0 q
+mkdir -p "$PROJ_BKP/$T_K"
+for s in 20200101 20200102 20200103; do : > "$PROJ_BKP/$T_K/$s-000000.tar.gz"; done
+proj_backup_do "$T_K" "$T_D" 2 >/dev/null 2>&1
+eq "backup mantém só 2" 2 "$(ls "$PROJ_BKP/$T_K"/*.tar.gz | wc -l)"
+ok "backup é verificável" tar -tzf "$(ls -1 "$PROJ_BKP/$T_K"/*.tar.gz | tail -1)"
+mkdir -p "$PROJ_BKP/removidos"
+f1="$PROJ_BKP/removidos/old-1.0-20200101-000000.tar.gz"
+f2="$PROJ_BKP/removidos/old-1.0-20200102-000000.tar.gz"
+: > "$f1"; : > "$f2"; touch -d 2020-01-01 "$f1" "$f2"
+NOTIFY=0 proj_clean_run quiet
+no "clean apaga o antigo" test -e "$f1"
+ok "clean preserva o mais novo" test -e "$f2"
+echo "config"
+proj_cfg_snapshot
+eq "snapshot da config" 1 "$(ls "$PROJ_BKP/_config"/*.tar.gz 2>/dev/null | wc -l)"
 echo; echo "$pass ok, $fail falha(s)"
 [ "$fail" -eq 0 ]
