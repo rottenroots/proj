@@ -77,5 +77,32 @@ ok "clean preserva o mais novo" test -e "$f2"
 echo "config"
 proj_cfg_snapshot
 eq "snapshot da config" 1 "$(ls "$PROJ_BKP/_config"/*.tar.gz 2>/dev/null | wc -l)"
+echo "pick em lote"
+proj_new pk-a >/dev/null 2>&1; proj_new pk-b >/dev/null 2>&1
+_proj_src cmd/pick.sh
+t_batch() {
+  local filt="" msg="" n="" v=""
+  local -A bk=() mk=() RI=()
+  local -a R=() TG=()
+  _pick_load
+  mk["pk-a@1.0"]=1; mk["pk-b@1.0"]=1
+  _pick_flag x
+  proj_tag_in() { _pick_tag add; }
+  _pick_targets
+  for k in "${TG[@]}"; do proj_tag add lote,teste "$k" >/dev/null 2>&1; done
+}
+t_batch
+eq "lote: imunidade em 2" 2 "$(proj_ls -t | grep -c 'imune')"
+eq "lote: tags em 2" 2 "$(proj_ls -t | grep -c 'lote,teste')"
+echo "comparação"
+proj_new cmp-a >/dev/null 2>&1; proj_new cmp-b >/dev/null 2>&1
+proj_resolve cmp-a@1.0 q
+proj_backup_do "$T_K" "$T_D" 5 >/dev/null 2>&1
+echo extra > "$T_D/novo.txt"; echo mais >> "$T_D/README.md"
+r=$(proj_cmp cmp-a -b 2>&1)
+eq "cmp: arquivo novo" 1 "$(grep -c '+ novo.txt' <<<"$r")"
+eq "cmp: arquivo modificado" 1 "$(grep -c '~ README.md' <<<"$r")"
+eq "cmp: limite -n" 1 "$(proj_cmp cmp-a -b -n 1 2>&1 | grep -c 'mais 1')"
+eq "cmp: dois projetos" 1 "$(proj_cmp cmp-a cmp-b 2>&1 | grep -c '^categoria')"
 echo; echo "$pass ok, $fail falha(s)"
 [ "$fail" -eq 0 ]

@@ -4,7 +4,7 @@ LIB   := lib/proj
 ORDER := core/config.sh core/util.sh core/tags.sh store/readme.sh store/state.sh \
          nav/resolve.sh store/scan.sh store/size.sh backup/backup.sh backup/clean.sh \
          cmd/new.sh cmd/add.sh cmd/remove.sh cmd/flags.sh cmd/mv.sh cmd/archive.sh cmd/vendor.sh \
-         cmd/organize.sh cmd/list.sh cmd/info.sh cmd/notes.sh cmd/misc.sh cmd/doctor.sh \
+         cmd/organize.sh cmd/list.sh cmd/info.sh cmd/cmp.sh cmd/notes.sh cmd/misc.sh cmd/doctor.sh \
          cmd/ui.sh cmd/pick.sh cmd/help.sh main.sh completion.sh
 
 .PHONY: cpp parity docs check lint test build bench install dev uninstall clean

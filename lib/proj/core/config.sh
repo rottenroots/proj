@@ -21,7 +21,7 @@ PROJ_CMDS="pick ui add ls l info i new n backup b vendor v scan s path p edit e 
 # @out defaults + sobrescreve com $PROJ_CFG
 proj_cfg_load() {
   PROJ_COLOR=auto; CLEAN_ON=1; CLEAN_DIAS=30; CLEAN_MIN=1; IMUNE_TAG=imune
-  BKP_IV=1d; BKP_KEEP=5; SIZE_WARN_MB=500; FREE_WARN_MB=300; NOTIFY=1; HOOKS=1; PROJ_UI_KEY=off; PROJ_PICK=0; BKP_ALL=0
+  BKP_IV=1d; BKP_KEEP=5; SIZE_WARN_MB=500; FREE_WARN_MB=300; NOTIFY=1; HOOKS=1; PROJ_UI_KEY=off; PROJ_PICK=0; BKP_ALL=0; CMP_LINES=20
   [ -f "$PROJ_CFG" ] && . "$PROJ_CFG"
   return 0
 }

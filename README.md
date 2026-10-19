@@ -30,9 +30,22 @@ Abra um novo terminal. O instalador adiciona uma linha ao `~/.bashrc` (e `./inst
 No `proj pick`: `b` liga/desliga backup, `f` fixa (★) e `x` alterna a imunidade (🔒) do projeto
 selecionado. Não há `rm` no seletor, de propósito.
 
+Seleção múltipla: `espaço` marca (✓), `a` marca todos os visíveis, `c` limpa. As ações `b`, `f`, `x`,
+`t` (adiciona tags), `T` (remove tags) e `z` (arquiva) valem para todos os marcados, ou só para o
+selecionado se nada estiver marcado. O arquivamento pede confirmação e ignora projetos imunes.
+
 Em `proj ui` dá para ligar "Seletor no proj l" (o `proj l` passa a abrir o seletor; com flags
 como `-a` ou `-j` continua a tabela) e escolher um atalho de teclado (`Ctrl+G`, `Ctrl+O`, `Ctrl+P`)
 para abrir a própria tela.
+
+## Comparar
+
+    proj i app@1.0 app@1.1     # metadados lado a lado (diferenças em amarelo)
+    proj i app -b              # o que mudou desde o último backup (+ novo, ~ modificado, - removido)
+    proj i app -b3 -n 50       # contra o 3º backup mais recente, até 50 linhas (-n 0 = todas)
+
+O limite padrão é 20 linhas (`proj config CMP_LINES N` ou a tela `proj ui`). A comparação com o backup usa
+data e tamanho, sem extrair nada; um arquivo editado que manteve o mesmo tamanho no mesmo minuto não aparece.
 
 ## Estrutura
 

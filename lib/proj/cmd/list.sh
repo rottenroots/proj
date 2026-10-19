@@ -34,7 +34,8 @@ proj_ls() {
     *)      rows=$(sort -t$'\t' -k11,11nr -k1,1 -k2,2V <<<"$rows");;
   esac
   case "$fmt" in
-    tsv) printf 'nome\tversao\tdir\tdescricao\tcategoria\ttags\tcriado\tultimo_acesso\tacessos\tbytes\tfav\n'
+    tsv) if [ -t 1 ]; then _ls_tsv_tty "$rows"; return; fi
+         printf 'nome\tversao\tdir\tdescricao\tcategoria\ttags\tcriado\tultimo_acesso\tacessos\tbytes\tfav\n'
          printf '%s\n' "$rows"; return;;
     json) awk -F'\t' '
       function e(s) { gsub(/\\/,"",s); gsub(/"/,"\\\"",s); return s }
@@ -115,4 +116,18 @@ proj_grep() {
     grep -rIn $ic --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=.cache -e "$txt" "$d" 2>/dev/null |
       while IFS= read -r l; do printf '%s%s%s/%s\n' "$PC_C" "$n" "$PC_RST" "${l#"$d"/}"; done
   done < "$PROJ_IDX" | head -n 200
+}
+
+# @in rows  @out tabela alinhada (nome, versão, categoria, tags, tamanho) com cabeçalho colorido; só para tty
+_ls_tsv_tty() {
+  local n v c t size
+  {
+    printf 'NOME\tVERSAO\tCATEGORIA\tTAGS\tTAM\n'
+    while IFS=$'\t' read -r n v _ _ c t _ _ _ size _; do
+      printf '%s\t%s\t%s\t%s\t%s\n' "$n" "v$v" "$c" "$t" "$([ "${size:-0}" -gt 0 ] && proj_hum "$size" || echo -)"
+    done <<<"$1"
+  } | awk -F'\t' -v h="$PC_H" -v r="$PC_RST" '
+    { for (i=1;i<=NF;i++) { if (length($i)>w[i]) w[i]=length($i); c[NR,i]=$i } n=NR; nf=NF }
+    END { for (k=1;k<=n;k++) { l=""; for (i=1;i<=nf;i++) l=l sprintf("%-" (w[i]+2) "s", c[k,i])
+            if (k==1) print h l r; else print l } }'
 }

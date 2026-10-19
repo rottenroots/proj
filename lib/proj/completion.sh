@@ -23,6 +23,7 @@ _proj_complete() {
               COMPREPLY=( $(compgen -W "ls restore $names $arch" -- "$cur") );;
     todo)     COMPREPLY=( $(compgen -W "add done rm ls -p" -- "$cur") );;
     config)   COMPREPLY=( $(compgen -W "PROJ_COLOR CLEAN_ON CLEAN_DIAS CLEAN_MIN IMUNE_TAG BKP_IV BKP_KEEP SIZE_WARN_MB FREE_WARN_MB NOTIFY HOOKS" -- "$cur") );;
+    info|i)   COMPREPLY=( $(compgen -W "-j -b -n $names" -- "$cur") );;
     ls|l)     COMPREPLY=( $(compgen -W "-s -r -a -p -f -j -t $names" -- "$cur") );;
     *)        COMPREPLY=( $(compgen -W "$names" -- "$cur") );;
   esac

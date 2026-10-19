@@ -59,6 +59,7 @@ _proj_lazy cmd/add.sh      proj_add
 _proj_lazy cmd/ui.sh       proj_ui
 _proj_lazy cmd/pick.sh     proj_pick
 _proj_lazy backup/backup.sh proj_cfg_snapshot
+_proj_lazy cmd/cmp.sh      proj_cmp
 # atalhos dos projetos (nome() { proj_cd nome; })
 [ -f "$PROJ_FN" ] && . "$PROJ_FN"
 _proj_lazy backup/backup.sh proj_backup_auto proj_free_check proj_bg proj_backup

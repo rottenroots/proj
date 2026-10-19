@@ -7,16 +7,16 @@
 proj_ui() {
   [ -t 0 ] && [ -t 1 ] || { echo "proj ui precisa de um terminal." >&2; return 1; }
   proj_boot
-  local -a K=(PROJ_COLOR CLEAN_ON CLEAN_DIAS CLEAN_MIN IMUNE_TAG BKP_IV BKP_KEEP SIZE_WARN_MB FREE_WARN_MB NOTIFY HOOKS PROJ_PICK BKP_ALL PROJ_UI_KEY)
+  local -a K=(PROJ_COLOR CLEAN_ON CLEAN_DIAS CLEAN_MIN IMUNE_TAG BKP_IV BKP_KEEP SIZE_WARN_MB FREE_WARN_MB NOTIFY HOOKS PROJ_PICK BKP_ALL CMP_LINES PROJ_UI_KEY)
   local -A L=([PROJ_COLOR]="Cores" [CLEAN_ON]="Limpeza automática" [CLEAN_DIAS]="Limpar após (dias)"
     [CLEAN_MIN]="Manter por projeto" [IMUNE_TAG]="Tag de imunidade" [BKP_IV]="Backup: intervalo"
     [BKP_KEEP]="Backup: cópias" [SIZE_WARN_MB]="Alerta tamanho (MB)" [FREE_WARN_MB]="Alerta espaço (MB)"
-    [NOTIFY]="Notificações" [HOOKS]="Hooks .proj-enter" [PROJ_UI_KEY]="Atalho desta tela" [PROJ_PICK]="Seletor no proj l" [BKP_ALL]="Backup em todos")
+    [NOTIFY]="Notificações" [HOOKS]="Hooks .proj-enter" [PROJ_UI_KEY]="Atalho desta tela" [PROJ_PICK]="Seletor no proj l" [BKP_ALL]="Backup em todos" [CMP_LINES]="Linhas na comparação")
   local -A T=([PROJ_COLOR]=enum [CLEAN_ON]=bool [CLEAN_DIAS]=num [CLEAN_MIN]=num [IMUNE_TAG]=txt
-    [BKP_IV]=enum [BKP_KEEP]=num [SIZE_WARN_MB]=num [FREE_WARN_MB]=num [NOTIFY]=bool [HOOKS]=bool [PROJ_UI_KEY]=enum [PROJ_PICK]=bool [BKP_ALL]=bool)
+    [BKP_IV]=enum [BKP_KEEP]=num [SIZE_WARN_MB]=num [FREE_WARN_MB]=num [NOTIFY]=bool [HOOKS]=bool [PROJ_UI_KEY]=enum [PROJ_PICK]=bool [BKP_ALL]=bool [CMP_LINES]=num)
   local -A O=([PROJ_COLOR]="auto off" [BKP_IV]="30m 1h 6h 12h 1d 1w" [PROJ_UI_KEY]="off C-g C-o C-p")
-  local -A S=([CLEAN_DIAS]=5 [CLEAN_MIN]=1 [BKP_KEEP]=1 [SIZE_WARN_MB]=100 [FREE_WARN_MB]=100)
-  local -A M=([CLEAN_DIAS]=1 [CLEAN_MIN]=1 [BKP_KEEP]=1 [SIZE_WARN_MB]=50 [FREE_WARN_MB]=50)
+  local -A S=([CLEAN_DIAS]=5 [CLEAN_MIN]=1 [BKP_KEEP]=1 [SIZE_WARN_MB]=100 [FREE_WARN_MB]=100 [CMP_LINES]=5)
+  local -A M=([CLEAN_DIAS]=1 [CLEAN_MIN]=1 [BKP_KEEP]=1 [SIZE_WARN_MB]=50 [FREE_WARN_MB]=50 [CMP_LINES]=0)
   local SEL=0 MSG="" UNDO_K="" UNDO_V="" key rest k v n=${#K[@]}
   trap '_ui_leave; trap - INT; return 130' INT
   printf '\e[?1049h\e[?25l'

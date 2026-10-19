@@ -1,6 +1,9 @@
 # cmd/info.sh - proj info [alvo] [-j]
-# @uses proj_resolve proj_st_get proj_st_set proj_size_calc proj_fmt_secs proj_fdate proj_hum proj_kv _proj_desc
+# @uses proj_resolve proj_st_get proj_st_set proj_size_calc proj_fmt_secs proj_fdate proj_hum proj_kv _proj_desc proj_cmp
 proj_info() {
+  local _x _pos=0 _cmp=""
+  for _x in "$@"; do case "$_x" in -b*|-n*) _cmp=1;; -j|--json) ;; *) _pos=$((_pos+1));; esac; done
+  if [ -n "$_cmp" ] || [ "$_pos" -ge 2 ]; then proj_cmp "$@"; return; fi
   local json="" arg="" x desc c t cr row last cnt fav d k n v
   local sz_t sz_f mod bk iv keep bcnt blast bstat vend gitb gitn free lock=0 now bkk bs
   for x in "$@"; do case "$x" in -j|--json) json=1;; *) arg="$x";; esac; done

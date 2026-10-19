@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.6.0
+- Novo: `proj i A B` compara dois projetos/versões; `proj i A -b[N]` compara com o backup (novos, modificados, removidos).
+- Novo: `CMP_LINES` (padrão 20) limita a lista; `-n L` sobrescreve (`-n 0` mostra tudo).
+
+## 4.5.0
+- `proj pick`: seleção múltipla (`espaço`, `a`, `c`) com ações em lote: backup, favorito, imunidade, tags (`t`/`T`) e arquivar (`z`).
+- `proj pick` só recarrega a lista depois de uma ação ou filtro (mais rápido ao navegar).
+
 ## 4.4.0
 - Novo: cópia automática da configuração (`~/.config/proj`) 1x/dia em `$PROJ_BKP/_config`, mantém 7. `proj b cfg [now|ls|restore]`.
 - Testes de backup (rotação, verificação), clean e snapshot da configuração.

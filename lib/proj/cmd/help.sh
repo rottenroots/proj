@@ -7,6 +7,7 @@ proj l  [filtro] [-s|-r|-a] [-p] [-f] [-j|-t]
                                lista (-s tamanho, -r recentes, -a A-Z, -p caminho,
                                -f recalcula tamanhos, -j json, -t tsv)
 proj i  [alvo] [-j]            informações completas do projeto
+                               proj i A B (compara dois) | proj i A -b[N] [-n L] (compara com o backup)
 proj add [pasta] [nome] [versao] [-c cat] [-t tags] [-d "desc"]
                                registra uma pasta que já existe (não move nada)
 proj n  nome [versao] [-c cat/sub] [-t tags] [-d "desc"] [-b versao_base|.]
@@ -32,7 +33,7 @@ proj b  cfg [now|ls|restore]       cópias da configuração (~/.config/proj), 1
 proj v  add <projeto[@versao]|url|caminho> [nome] | ls | use <nome> | rm <nome>
 proj s  [full]                 reescaneia     proj organize [-n]
 proj doctor [-f]               diagnóstico    proj export [-j] [arquivo]
-proj pick [filtro]              seletor interativo (⏎ entra, b backup, f fav, x imune)
+proj pick [filtro]              seletor (espaço marca vários; b backup, f fav, x imune, t tag, z arquiva)
 proj ui                        tela de configuração ao vivo (↑↓ ←→ ⏎)
 proj config [chave [valor]]    configurações (cores, limites, intervalo padrão...)
 

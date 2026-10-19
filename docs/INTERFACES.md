@@ -157,12 +157,23 @@ Tags: `@in` entradas, `@out` saída, `@g` globais, `@effect` efeitos colaterais,
 
 - **`proj_pick`**
   - @in [filtro]  @effect tela cheia; ⏎ entra no projeto (cd no shell atual)
-  - @effect b/f/x gravam backup, favorito e imunidade na hora  @ret 1 sem terminal
-  - @uses proj_rows proj_resolve proj_enter proj_info proj_backup proj_fav proj_lock proj_pad
+  - @effect espaço marca vários; b/f/x/t/T/z agem nos marcados (ou no selecionado) e gravam na hora
+  - @ret 1 sem terminal
+  - @uses proj_rows proj_resolve proj_enter proj_info proj_backup proj_fav proj_lock proj_tag proj_archive proj_pad
 - **`_pick_leave`**
   - @effect sai da tela alternativa
 - **`_pick_load`**
-  - @effect recarrega R (linhas de proj_rows, favoritos primeiro) e bk (chaves com backup próprio)
+  - @effect recarrega R (filtrado, favoritos primeiro), RI (todas as linhas por n@v) e bk (backup próprio)
+- **`_pick_markall`**
+  - @effect marca todos os visíveis; se já estavam todos marcados, desmarca
+- **`_pick_targets`**
+  - @out TG = n@v dos marcados, ou do selecionado se nada estiver marcado
+- **`_pick_flag`**
+  - @in b|f|x  @effect liga em todos se algum alvo não tem; senão desliga em todos
+- **`_pick_tag`**
+  - @in add|rm  @effect pergunta as tags (a,b,c) e aplica nos alvos
+- **`_pick_archive`**
+  - @effect arquiva os alvos (pede confirmação; pula imunes)
 - **`_pick_draw`**
   - @effect redesenha a tela (sem limpar antes: sem piscar)
 
@@ -364,4 +375,4 @@ Tags: `@in` entradas, `@out` saída, `@g` globais, `@effect` efeitos colaterais,
   - @out stdout: n v d desc cat tags criado | acesso acessos bytes fav
 
 ---
-104 funções, 5 sem contrato.
+109 funções, 5 sem contrato.
